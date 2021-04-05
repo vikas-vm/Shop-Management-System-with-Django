@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="col-lg-7 mx-auto">
+    <div class="card bg-dark mt-4">
+        <div class="card-body">
+            <form id="item-form">
+            <div class="row">
+                {% for field in itemForm %}
+                    <div class="form-group col-6">
+                        <label class="col-12 text-light">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+                {% csrf_token %}
+                <button class="btn btn-success btn-block">Save</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+<script>
+    $("#item-form").submit(function (e) {
+        e.preventDefault();
+        const serializedData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'save_item' %}",
+            data: serializedData,
+            beforeSend: function(){
+            },
+            success: function () {
+                function my_function() {
+                $("#item-form").trigger('reset');
+                $("#id_itemCategoryId").focus();
+                alert("successfully Saved")
+                }
+                setTimeout(my_function, 10)
+            },
+            error: function () {
+                alert("Failed to save new item");
+            },
+           complete:function(){
+           }
+        })
+    });
+</script>
+</body>
+</html>

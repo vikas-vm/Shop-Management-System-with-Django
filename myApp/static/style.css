@@ -1,0 +1,26 @@
+.box{
+    height: 90vh;
+    overflow-y: scroll;
+}
+.height{
+    min-height: 85vh;
+}
+.displayNone{
+    display: none;
+}
+.header{
+    top: 0;
+    height: 10px;
+    width: 100%;
+}
+.order-btn{
+    bottom: 3vh;
+    right: 4vw;
+    position: fixed;
+}
+.btn-height{
+    height: 50px;
+}
+.card-height{
+    height: 50px;
+}

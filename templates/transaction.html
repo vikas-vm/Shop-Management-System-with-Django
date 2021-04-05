@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <div class="row no-gutters">
+                <div class="col-lg-6 mx-auto">
+                    <div class="bg-dark box" id="box3">
+                        <div class="text-center sticky-top bg-info shadow">Add New Transaction</div>
+                        <div class="container height mt-1">
+                            <div class="card bg-dark mt-4">
+                                <div class="card-body">
+                                    <form id="trans-form">
+                                        {% for field in transactionForm %}
+                                            <div class="form-group">
+                                                <label class="text-light">{{ field.label }}</label>
+                                                {{ field }}
+                                            </div>
+                                        {% endfor %}
+                                        {% csrf_token %}
+                                        <button class="btn btn-success btn-block">Add Transaction</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mx-auto">
+                    <div class="bg-dark box" id="box3">
+                        <div class="text-center sticky-top bg-info shadow">All Transactions</div>
+                        <div class="container height mt-1">
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <div class="card card-body bg-dark mb-3">
+                                        <span class="text-success">+{{ totalDeposits.transAmount__sum }}</span>
+                                        <div class="ml-auto text-light">Total deposits</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card card-body bg-dark mb-3">
+                                        <span class="text-danger">-{{ totalWithdraw.transAmount__sum }}</span>
+                                        <div class="ml-auto text-light">Total Withdraw</div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card card-body bg-dark mb-3">
+                                        {% if currentBalance < 0 %}
+                                            <span class="text-danger">{{ currentBalance }}</span>
+                                        {% else %}
+                                            <span class="text-success">+{{ currentBalance }}</span>
+                                        {% endif %}
+                                        <div class="ml-auto text-light">Current Balance</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% for transaction in transactions %}
+                                <div class="card bg-dark text-light mb-3 border-0 shadow card-body">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            {% if transaction.transBillId %}
+                                                <u>Bill Id:</u> {{ transaction.transBillId.billId }}<br>
+                                                <u>Name on bill:</u> {{ transaction.transBillId.billName }}
+                                            {% endif %}
+                                            {% if transaction.transStatement %}
+                                                {{ transaction.transStatement }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-3">
+                                            {% if transaction.transStatus == 0 %}
+                                                <span class="text-success">+{{ transaction.transAmount }}</span>
+                                            {% else %}
+                                                <span class="text-danger">-{{ transaction.transAmount }}</span>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#trans-form").submit(function (e) {
+            e.preventDefault();
+            const serializedData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'transactions' %}",
+                data: serializedData,
+                beforeSend: function(){
+                },
+                success: function () {
+                    function my_function() {
+                        $("#trans-form").trigger('reset');
+                        $("#id_transStatement").focus();
+                        $("#container").load("{% url 'transactions' %}");
+                    }
+                    setTimeout(my_function, 0)
+                },
+                error: function () {
+                    alert("Failed to save new item");
+                },
+                complete:function(){
+                }
+            })
+        });
+    </script>
+</div>
+</body>
+</html>

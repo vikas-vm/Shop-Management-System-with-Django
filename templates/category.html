@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="category"><div class="col-lg-5 mx-auto">
+        <div class="card bg-dark mt-5">
+            <div class="card-body">
+                <form id="category-form">
+                    {% csrf_token %}
+                    {% for field in categoryForm %}
+                    <div class="form-group">
+                        <label class="col-12 text-light">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    <button class="btn btn-success btn-block">Save</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+            $("#category-form").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            const serializedData = $(this).serialize();
+            // make POST ajax call
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'save_category' %}",
+                data: serializedData,
+                beforeSend: function(){
+                },
+                success: function () {
+                    function my_function() {
+                    $("#category-form").trigger('reset');
+                    // 2. focus to nickname input
+                    $("#id_categoryName").focus();
+                    alert("successfully Saved")
+                    }
+                    setTimeout(my_function, 100)
+                },
+                error: function () {
+                    // alert the error if any error occurs
+                    alert("Failed To add new Category... May be it's already exists in the lists,.. please, try with different name");
+                },
+               complete:function(){
+               }
+            })
+        });
+    </script>
+</body>
+</html>

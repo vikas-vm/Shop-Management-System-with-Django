@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-2 p-1">
+            <div class="bg-dark box">
+                <div  class="text-center bg-info shadow sticky-top">Categories</div>
+                <div class="container-fluid mt-2">
+                    <div class="list-group small list-group-flush">
+                        <div class="list-group-item list-group-item-action list-group-item-danger">Category Lists</div>
+                            <a href="#" onclick="Category(0)" class="list-group-item list-group-item-action list-group-item-dark" >Show All Items</a>
+                            {% for category in categories %}
+                            <a href="#" onclick="Category({{ category.categoryId }})" class="list-group-item list-group-item-action list-group-item-dark" >{{ category.categoryName }}</a>
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-7 p-1">
+            <div class="bg-dark box" id="box3">
+                <div class="text-center sticky-top bg-info shadow">Items</div>
+                <div id="items" class="container-fluid mt-1">
+                    <div class="row">
+                        {% for item in  items %}
+                            <div class="col-md-2 p-1 mb-1 itemBox{{ item.itemCategoryId.categoryId }} item-box">
+                                <button {% if item.itemStock == 0.0 %} disabled {% endif %}  class="btn btn-block btn-height btn-sm  {% if item.itemStock < item.itemAlertVal %} btn-danger {% elif item.itemStock  > item.itemAlertVal %}
+                                 btn-success {% else %} btn-warning {% endif  %}"  data-toggle="modal" data-target="#modal{{ item.itemId }}">{{ item.itemName }}<span class="small">({{ item.itemCategoryId.categoryName }})</span></button>
+                            </div>
+                            <div class="modal carousel-fade" id="modal{{ item.itemId }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-sm">
+                                <div class="modal-content mt-5">
+                                    <div class="modal-header h5 bg-dark text-light">
+                                        {{ item.itemName}} <span class="float-right">
+                                        {% if item.itemStatus == 0 %}
+                                        {{ item.itemStock }}Kg</span>
+                                        {% else %}
+                                        {{ item.itemStock|add:"0" }} unts
+                                        {% endif %}
+                                    </div>
+                                    <div class="modal-body">
+                                    <button type="button" class="btn btn-secondary" hidden id="closeForm{{ item.itemId }}" data-dismiss="modal">Close</button>
+                                        <form id="kart-item{{ item.itemId }}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="kartItemId" id="id_kartItemId" value="{{ item.itemId }}">
+                                            <div class="form-group">
+                                                <label>Quantity</label>
+                                                <input type="text"  placeholder="Enter Quantity" disabled class="form-control text-right qtyView{{ item.itemId }}">
+                                            </div>
+                                            <input type="hidden" name="kartItemVol" value="0" id="id_kartItemVol" class="id_kartItemVol{{ item.itemId }}">
+                                            <input type="hidden" name="kartItemPrice" value="0" id="id_kartItemPrice" class="id_kartItemPrice{{ item.itemId }}">
+                                            <button class="btn btn-warning float-right">Add</button>
+                                        </form>
+                                        {% if item.itemStatus == 0 %}
+                                            <h5><u>Kg</u></h5>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(1)" class="btn btn-outline-dark btn-block">1kg</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(2)" class="btn btn-outline-dark btn-block">2kg</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(3)" class="btn btn-outline-dark btn-block">3kg</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(5)" class="btn btn-outline-dark btn-block">5kg</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(10)" class="btn btn-outline-dark btn-block">10kg</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(15)" class="btn btn-outline-dark btn-block">15kg</button>
+                                                </div>
+                                            </div>
+                                            <h6><u>gram</u></h6>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(0.025)" class="btn btn-outline-dark btn-block">25g</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(0.05)" class="btn btn-outline-dark btn-block">50g</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(.1)" class="btn btn-outline-dark btn-block">100g</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(.2)" class="btn btn-outline-dark btn-block">200g</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(.25)" class="btn btn-outline-dark btn-block">250g</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(.5)" class="btn btn-outline-dark btn-block">500g</button>
+                                                </div>
+                                            </div>
+                                            <script>
+                                            function Calc{{ item.itemId }}(get_val){
+
+                                                var id_kartItemVol = $(".id_kartItemVol{{ item.itemId }}");
+                                                var id_kartItemPrice = $(".id_kartItemPrice{{ item.itemId }}");
+                                                var price = {{ item.itemSellingPrice }};
+                                                var qtyView = $(".qtyView{{ item.itemId }}");
+                                                var x;
+                                                var num = id_kartItemVol.val();
+                                                num = (parseFloat(num)+parseFloat(get_val));
+                                                id_kartItemVol.val((num).toFixed(3));
+                                                if (num < 1){
+                                                    x = (num * 1000).toFixed(0)+"g"
+
+                                                }
+                                                else {
+                                                    x = (num).toFixed(3)+"kg"
+                                                }
+                                                qtyView.val(x);
+                                                id_kartItemPrice.val(parseInt(price * num));
+                                            }
+                                            </script>
+                                        {% else %}
+                                            <h5><u>Units</u></h5>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(1)" class="btn btn-outline-dark btn-block">1unt</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(2)" class="btn btn-outline-dark btn-block">2unts</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(3)" class="btn btn-outline-dark btn-block">3unts</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(5)" class="btn btn-outline-dark btn-block">5unts</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(10)" class="btn btn-outline-dark btn-block">10unts</button>
+                                                </div>
+                                                <div class="col p-1">
+                                                    <button onclick="Calc{{ item.itemId }}(15)" class="btn btn-outline-dark btn-block">15unts</button>
+                                                </div>
+                                            </div>
+                                            <script>
+                                            function Calc{{ item.itemId }}(get_val){
+
+                                                var id_kartItemVol = $(".id_kartItemVol{{ item.itemId }}");
+                                                var id_kartItemPrice = $(".id_kartItemPrice{{ item.itemId }}");
+                                                var price = {{ item.itemSellingPrice }};
+                                                var qtyView = $(".qtyView{{ item.itemId }}");
+                                                var x;
+                                                var num = id_kartItemVol.val();
+                                                num = (parseFloat(num)+parseFloat(get_val));
+                                                id_kartItemVol.val((num).toFixed(0));
+                                                if (num < 2){
+                                                    x = num+" unit"
+                                                }
+                                                else {
+                                                    x = num+" units"
+                                                }
+                                                qtyView.val(x);
+                                                id_kartItemPrice.val(parseInt(price * num));
+
+                                            }
+                                            </script>
+                                        {% endif %}
+
+                                        <script>
+                                            $("#kart-item{{ item.itemId }}").submit(function (e) {
+                                                e.preventDefault();
+                                                if ($(".id_kartItemVol{{ item.itemId }}").val()>0){
+                                                const serializedData = $(this).serialize();
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{% url 'save_kartItem' %}",
+                                                    data: serializedData,
+                                                    beforeSend: function(){
+                                                    },
+                                                    success: function () {
+                                                        function my_function() {
+                                                        $("#kart-item{{ item.itemId }}").trigger('reset');
+                                                        $("#id_kartItemVol").focus();
+                                                        $("#closeForm{{ item.itemId }}").click();
+                                                        $(".kart-container").load("{% url 'kart' %}");
+                                                        }
+                                                        setTimeout(my_function, 0)
+                                                    },
+                                                    error: function () {
+                                                        alert("Failed to save new item");
+                                                    },
+                                                   complete:function(){
+                                                   }
+                                                })
+                                                }
+                                                else {
+                                                    alert("Please, add quantity!")
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+
+                                </div>
+                              </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-3 p-1">
+            <div class="bg-dark box">
+                <div class="text-center sticky-top bg-info shadow">Selected-Items</div>
+                <div class="container-fluid kart-container">
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $(".kart-container").load("{% url 'kart' %}");
+                });
+            </script>
+        </div>
+    </div>
+</body>
+</html>

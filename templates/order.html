@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-10 mx-auto">
+    <div class="bg-dark box" id="box3">
+        <div class="text-center sticky-top bg-info shadow">Order</div>
+            <div class="container-fluid mt-1">
+                <table class=" col-10 mx-auto mt-2 table table-light">
+                    <tr class="bg-info">
+                        <th>S.No.</th>
+                        <th>Item</th>
+                        <th>Vol/Qty</th>
+                        <th>Amount</th>
+                    </tr>
+                    {% for kartItem in kartItems %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ kartItem.kartItemId.itemName }}</td>
+                        <td>
+                            {% if kartItem.kartItemId.itemStatus == 0 %}
+                                {{ kartItem.kartItemVol }} kg
+                            {% else %}
+                                {{ kartItem.kartItemVol|add:'0' }} unts
+
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ kartItem.kartItemPrice }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <table class="table table-light col-10 mx-auto">
+                    <form id="bill-form">
+                        <tr>
+                            <th>Total(in Rs.)</th>
+                            <th>
+                                <input type="number" name="billTotalAmount" id="id_billTotalAmount" disabled value="{{ totalPrice.kartItemPrice__sum }}" class="text-right">
+                            </th>
+                        <tr>
+                            <td>Pay Amount(in Rs.)</td>
+                            <td>
+                                <input type="number" name="billPayAmount" id="id_billPayAmount" class="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PayBack(in Rs.)</td>
+                            <td>
+                                <input type="text" name="billPaybackAmount" id="id_billPaybackAmount" disabled class="text-right">
+                            </td>
+                        </tr>
+                        </tr>
+                        <tr>
+                            <td>Name on Bill</td>
+                            <td>
+                                <input type="text" name="billName" id="id_billName" class="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button disabled class="btn btn-success btn-bill px-5">Generate Bill</button>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".btn-bill").click(function () {
+        const name = $("#id_billName").val();
+        const total = $("#id_billTotalAmount").val();
+        const pay = $("#id_billPayAmount").val();
+        const payback = $("#id_billPaybackAmount").val();
+            $.ajax({
+                url: "{% url 'generate_bill' %}",
+                type: 'GET',
+                data:{
+                    name: name,
+                    pay: pay,
+                    payback: payback,
+                    total: total,
+                },
+                beforeSend: function() {
+                },
+                success: function(){
+                    $.ajax({
+                        url: "{% url 'add_sold_item' %}",
+                        type: 'GET',
+                        beforeSend: function() {
+                        },
+                        success: function(){
+                            $("#container").load("{% url 'bill' %}");
+                        },
+                        error:function () {
+                            alert("fail")
+
+                        }
+                    });
+                },
+                error:function () {
+                    alert("fail")
+
+                }
+            });
+    });
+    $("#id_billPayAmount").change(function () {
+        const pay = $("#id_billPayAmount").val();
+        const total = $("#id_billTotalAmount").val();
+        const payback = $("#id_billPaybackAmount");
+        const bill_btn = $(".btn-bill");
+        if(parseInt(pay)<parseInt(total)){
+            alert("please provide more  or equal to total payment");
+            bill_btn.prop('disabled', true);
+        }
+        else {
+            payback.val(pay-total);
+            bill_btn.removeAttr('disabled');
+        }
+    });
+</script>
+</body>
+</html>

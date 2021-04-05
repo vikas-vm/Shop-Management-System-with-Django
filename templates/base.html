@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body class="bg-secondary">
+    <div class="container2">
+{% load crispy_forms_tags %}
+    </div>
+    <nav class="navbar navbar-dark small bg-primary tempNav">
+        <a href="" class="navbar-brand">Shops & Stocks</a>
+    </nav>
+    <nav class="navbar navbar-dark bg-dark small navbar-expand-sm sticky-top  shadow">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a href="#" id="shops" class="nav-link">Shops</a></li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a href="#" id="stocks" class="nav-link">Stocks</a></li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a href="#" id="category" class="nav-link">Manage Category</a></li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a href="#" id="item" class="nav-link">Manage Items</a></li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a href="#" id="transactions" class="nav-link">Transactions</a></li>
+        </ul>
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a href="#" id="last-bill" class="nav-link">Last Generated Bill</a></li>
+        </ul>
+    </nav>
+    <div id="container" class="container-fluid mt-1">
+    {% block container %}
+
+    {% endblock %}
+
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            {% load static %}
+            $("#container").load("{% url 'loader' %}");
+            function HideNav(){
+                $(".tempNav").fadeOut("slow");
+            }
+            setTimeout(HideNav, 500)
+        });
+        $("#shops").click(function () {
+            $("#container").load("{% url 'loader' %}");
+            });
+            $("#stocks").click(function () {
+                $("#container").load("{% url 'stock' %}");
+            });
+        $("#category").click(function () {
+            $("#container").load("{% url 'category' %}");
+        });
+        $("#item").click(function () {
+            $("#container").load("{% url 'item' %}");
+        });
+        $("#transactions").click(function () {
+            $("#container").load("{% url 'transactions' %}");
+        });
+        $("#last-bill").click(function () {
+            $("#container").load("{% url 'bill' %}");
+        });
+        function Category(id) {
+            if (id > 0){
+                $(".item-box").hide();
+                $(".itemBox"+id).show()
+            }
+            else {
+                $(".item-box").show();
+            }
+        }
+        function Delete(id) {
+            $.ajax({
+                url: "{% url 'delete_kartItem' %}",
+                type: 'GET',
+                data:{
+                    id: id
+                },
+                beforeSend: function() {
+                },
+                success: function(){
+                    $(".kart-container").load("{% url 'kart' %}");
+                },
+                error:function () {
+
+                }
+            });
+        }
+    </script>
+{% block javascript %}
+{% endblock %}
+</body>
+</html>

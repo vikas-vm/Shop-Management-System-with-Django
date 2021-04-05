@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-2 p-1">
+        <div class="bg-dark box">
+            <div class="text-center bg-info shadow sticky-top">Categories</div>
+            <div class="container-fluid mt-2">
+                <div class="list-group small list-group-flush">
+                    <div class="list-group-item list-group-item-action list-group-item-danger">Category Lists</div>
+                    <a href="#" onclick="Category(0)" class="list-group-item list-group-item-action list-group-item-dark" >Show All Items</a>
+                    {% for category in categories %}
+                    <a href="#" onclick="Category({{ category.categoryId }})" class="list-group-item list-group-item-action list-group-item-dark" >{{ category.categoryName }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-10 p-1">
+    <div class="bg-dark box" id="box3">
+        <div class="text-center sticky-top bg-info shadow">Available Stocks of Items</div>
+            <div class="container-fluid mt-1">
+                <div class="row">
+                    {% for item in  items %}
+                        <div class="col-2 p-1 mb-2 itemBox{{ item.itemCategoryId.categoryId }} item-box">
+                            <div {% if item.itemStock == 0.0 %} disabled {% endif %}  class="card  {% if item.itemStock == 0.0 %} bg-light {% else %} {% if item.itemStock < item.itemAlertVal %} bg-danger {% elif item.itemStock  > item.itemAlertVal %}
+                             bg-success {% else %} bg-warning {% endif  %}{% endif %}">
+                                <div class="text-center card-height">
+                                    {{ item.itemName }} <span class="small">({{ item.itemCategoryId.categoryName }})</span>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="float-right">
+                                        {% if item.itemStatus == 0 %}
+                                        {{ item.itemStock }} kg
+
+                                        {% else %}
+                                        {{ item.itemStock|add:"0" }} unts
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

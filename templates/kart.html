@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="row">
+    {% if kartItems %}
+        {% for kartItem in kartItems %}
+        <div class="col-md-6 p-1" id="kart-box{{ kartItem.kartId }}">
+            <div class="card bg-secondary text-light m-0 p-0 pb-0 small text-center">
+                <div class=" p-1">{{ kartItem.kartItemId.itemName }}
+                    <span id="inner1" class="small "> {% if kartItem.kartItemId.itemStatus == 0 %}{{ kartItem.kartItemVol}}kg{% else %}{{ kartItem.kartItemVol|add:"0" }} unts{% endif %}
+                    </span>
+                    <button href="" onclick="Delete('{{ kartItem.kartId }}')" class="float-right btn btn-sm btn-outline-dark small mr-2 rounded-circle px-2 py-0 ">X</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row order-btn">
+            <button href="#" class="btn reset-kart-items btn-danger shadow mr-2">Reset Selected</button>
+            <button href="#" class="btn proceed-order btn-success shadow">Proceed Order</button>
+        </div>
+    {% else %}
+        <div class="row order-btn">
+            <button disabled class="btn disabled reset-kart-items btn-danger shadow mr-2">Reset Selected</button>
+            <button disabled class="btn disabled btn-success shadow">Proceed Order</button>
+        </div>
+    {% endif %}
+    </div>
+<script>
+    $(".proceed-order").click(function () {
+        $("#container").load("{% url 'order' %}");
+    });
+    $(".reset-kart-items").click(function () {
+        $.ajax({
+            url: "{% url 'reset_kartItem' %}",
+            type: 'GET',
+            beforeSend: function() {
+            },
+            success: function(){
+                $("#container").load("{% url 'loader' %}");
+            },
+            error:function () {
+                alert("error");
+            }
+        });
+    });
+</script>
+</body>
+</html>

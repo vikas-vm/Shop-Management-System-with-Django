@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c66d3a5a-a1d2-4d07-a311-60254ef98207" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1Xvs3VXayt0KTnXpViyV4r9Yq5E" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../news7" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="shopAndStock" type="Python.DjangoServer" factoryName="Django server">
+      <module name="shopAndStock" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="shopAndStock.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c66d3a5a-a1d2-4d07-a311-60254ef98207" name="Default Changelist" comment="" />
+      <created>1581937703207</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581937703207</updated>
+      <workItem from="1581937706378" duration="17764000" />
+      <workItem from="1582044017498" duration="31615000" />
+      <workItem from="1582120485971" duration="36352000" />
+      <workItem from="1582200040713" duration="21522000" />
+      <workItem from="1582249738494" duration="6507000" />
+      <workItem from="1582276439170" duration="4727000" />
+      <workItem from="1582339384742" duration="43000" />
+      <workItem from="1582341265297" duration="697000" />
+      <workItem from="1582511787950" duration="855000" />
+      <workItem from="1582514722923" duration="341000" />
+      <workItem from="1582695191914" duration="663000" />
+      <workItem from="1582696031017" duration="193000" />
+      <workItem from="1582722891129" duration="865000" />
+      <workItem from="1582728311573" duration="2014000" />
+      <workItem from="1582778098024" duration="3151000" />
+      <workItem from="1582807820438" duration="22000" />
+      <workItem from="1582809191210" duration="3484000" />
+      <workItem from="1582827344588" duration="210000" />
+      <workItem from="1582828164413" duration="1701000" />
+      <workItem from="1582865259760" duration="3676000" />
+      <workItem from="1582874097774" duration="7096000" />
+      <workItem from="1582905828333" duration="1034000" />
+      <workItem from="1582916424675" duration="298000" />
+      <workItem from="1582916741139" duration="2877000" />
+      <workItem from="1582949890900" duration="4448000" />
+      <workItem from="1583137018730" duration="767000" />
+      <workItem from="1583145250435" duration="2599000" />
+      <workItem from="1583203300453" duration="164000" />
+      <workItem from="1583236787699" duration="3659000" />
+      <workItem from="1583328020991" duration="5291000" />
+      <workItem from="1583417219091" duration="3099000" />
+      <workItem from="1583501955588" duration="1918000" />
+      <workItem from="1584293078858" duration="3375000" />
+      <workItem from="1584414741203" duration="76000" />
+      <workItem from="1584557910054" duration="989000" />
+      <workItem from="1584601172109" duration="624000" />
+      <workItem from="1584608145231" duration="10000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="421" y="100" key="FileChooserDialogImpl" timestamp="1582949795928">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="421" y="100" key="FileChooserDialogImpl/0.0.1280.689@0.0.1280.689" timestamp="1582949795928" />
+    <state width="1237" height="166" key="GridCell.Tab.0.bottom" timestamp="1582515066609">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state width="1237" height="166" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1582515066609" />
+    <state width="1237" height="166" key="GridCell.Tab.0.center" timestamp="1582515066609">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state width="1237" height="166" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1582515066609" />
+    <state width="1237" height="166" key="GridCell.Tab.0.left" timestamp="1582515066609">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state width="1237" height="166" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1582515066609" />
+    <state width="1237" height="166" key="GridCell.Tab.0.right" timestamp="1582515066609">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state width="1237" height="166" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1582515066609" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1582829353465">
+      <screen x="0" y="0" width="1280" height="689" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.689@0.0.1280.689" timestamp="1582829353465" />
+  </component>
+</project>
